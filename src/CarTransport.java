@@ -43,17 +43,17 @@ public class CarTransport extends Truck implements Loadable<Car>{
         else throw new IllegalStateException("Truckbed is not closed for loading or truckbed is empty");
     }
 
+    @Override
     public void gas(double amount) {
         if (platform.drivable()) {
-            incrementSpeed(amount);
+            super.gas(amount);
         }
         else throw new IllegalStateException("Truckbed is not closed for loading");
     }
 
     @Override
     public void move() {
-        this.setxPos(currentSpeed * this.getxDir());
-        this.setyPos(currentSpeed * this.getyDir());
+        super.move();
 
         for(Car loadedCar : loadedCars)
         {

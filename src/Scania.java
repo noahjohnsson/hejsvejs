@@ -10,9 +10,10 @@ public class Scania extends Truck {
         this.platform = new ScaniaPlatform(this);
     }
 
+    @Override
     public void gas(double amount) {
         if (truckbedAngle == 0) {
-            incrementSpeed(amount);
+            super.gas(amount);
         } else throw new IllegalArgumentException("Truckebed is open");
     }
 }
