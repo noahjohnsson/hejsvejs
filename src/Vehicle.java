@@ -90,49 +90,53 @@ public abstract class Vehicle implements Movable {
 
     }
     public void turnLeft() {
-        System.out.println(this.xDir);
-        System.out.println(this.yDir);
+        double temp = this.xDir;
+        this.xDir = -this.yDir;
+        this.yDir = temp;
 
-        if (this.xDir == 0 && this.yDir == 1) {
-            this.xDir = -1;
-            this.yDir = 0;
-            return;
-        }
-        if (this.xDir == -1 && this.yDir == 0) {
-            this.xDir = 0;
-            this.yDir = -1;
-            return;
-        }
-        if (this.xDir == 0 && this.yDir == -1) {
-            this.xDir = 1;
-            this.yDir = 0;
-            return;
-        }
-        if (this.xDir == 1 && this.yDir == 0) {
-            this.xDir = 0;
-            this.yDir = 1;
-        }
+//        if (this.xDir == 0 && this.yDir == 1) {
+//            this.xDir = -1;
+//            this.yDir = 0;
+//            return;
+//        }
+//        if (this.xDir == -1 && this.yDir == 0) {
+//            this.xDir = 0;
+//            this.yDir = -1;
+//            return;
+//        }
+//        if (this.xDir == 0 && this.yDir == -1) {
+//            this.xDir = 1;
+//            this.yDir = 0;
+//            return;
+//        }
+//        if (this.xDir == 1 && this.yDir == 0) {
+//            this.xDir = 0;
+//            this.yDir = 1;
+//        }
     }
     public void turnRight() {
-        if (this.xDir == 0 && this.yDir == 1) {
-            this.xDir = 1;
-            this.yDir = 0;
-            return;
-        }
-        if (this.xDir == -1 && this.yDir == 0) {
-            this.xDir = 0;
-            this.yDir = 1;
-            return;
-        }
-        if (this.xDir == 0 && this.yDir == -1) {
-            this.xDir = -1;
-            this.yDir = 0;
-            return;
-        }
-        if (this.xDir == 1 && this.yDir == 0) {
-            this.xDir = 0;
-            this.yDir = -1;
-        }
+        double temp = this.xDir;
+        this.xDir = this.yDir;
+        this.yDir = -temp;
+//        if (this.xDir == 0 && this.yDir == 1) {
+//            this.xDir = 1;
+//            this.yDir = 0;
+//            return;
+//        }
+//        if (this.xDir == -1 && this.yDir == 0) {
+//            this.xDir = 0;
+//            this.yDir = 1;
+//            return;
+//        }
+//        if (this.xDir == 0 && this.yDir == -1) {
+//            this.xDir = -1;
+//            this.yDir = 0;
+//            return;
+//        }
+//        if (this.xDir == 1 && this.yDir == 0) {
+//            this.xDir = 0;
+//            this.yDir = -1;
+//        }
     }
     protected void incrementSpeed(double amount){
         if (getCurrentSpeed() + speedFactor() * amount > currentSpeed)
