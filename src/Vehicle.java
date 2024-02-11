@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public abstract class Car implements Movable {
+public abstract class Vehicle implements Movable {
     protected int nrDoors;
     protected double enginePower;
     protected double currentSpeed;
@@ -13,7 +13,7 @@ public abstract class Car implements Movable {
     private Size size;
     public enum Size { SMALL, MEDIUM, LARGE }
 
-    public Car(int nrDoors, double enginePower, Color color, String modelName, Size size) {
+    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, Size size) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.color = color;
@@ -43,10 +43,10 @@ public abstract class Car implements Movable {
     protected double getxDir() { return xDir; }
     protected double getyDir() { return yDir; }
 
-    protected double setxPos(double amount) { return this.xPos = amount;}
-    protected double setyPos(double amount) { return this.yPos = amount;}
-    protected double setxDir(double amount) { return this.xDir = amount;}
-    protected double setyDir(double amount) { return this.yDir = amount;}
+    protected void setxPos(double amount) { this.xPos = amount;}
+    protected void setyPos(double amount) { this.yPos = amount;}
+    protected void setxDir(double amount) { this.xDir = amount;}
+    protected void setyDir(double amount) { this.yDir = amount;}
 
     protected Color getColor() {
         return color;

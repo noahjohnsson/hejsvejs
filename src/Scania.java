@@ -1,20 +1,21 @@
 import java.awt.*;
 
 public class Scania extends Truck {
-    protected double truckbedAngle;
-    protected final Platform platform;
+
+    protected final ScaniaPlatform platform;
 
     public Scania() {
         super(2, 250, Color.lightGray, "Scania Truck");
-        this.truckbedAngle = 0;
-        this.platform = new ScaniaPlatform(this);
+        this.platform = new ScaniaPlatform();
     }
 
     @Override
     public void gas(double amount) {
-        if (truckbedAngle == 0) {
+        if (this.drivable()) {
             super.gas(amount);
         } else throw new IllegalArgumentException("Truckebed is open");
     }
+
+    public boolean drivable() { return this.platform.fullyClosed();}
 }
 

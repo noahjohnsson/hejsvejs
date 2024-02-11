@@ -1,28 +1,28 @@
-public class ScaniaPlatform extends Platform{
-    private Scania scania;
+public class ScaniaPlatform extends Platform {
 
-    public ScaniaPlatform(Scania scania) {
-        this.scania = scania;
+    protected double truckbedAngle;
+
+    public ScaniaPlatform() {
+        this.truckbedAngle = 70;
     }
+
+
+    public boolean fullyClosed() {return truckbedAngle == 70;}
 
     @Override
     public void raisePlatform() {
-        if (scania.getCurrentSpeed() == 0)
-        {
-            scania.truckbedAngle = Math.min(scania.truckbedAngle + 30, 70);
-        }
+        truckbedAngle = Math.min(truckbedAngle + 30, 70);
+        rampLoadable = false;
     }
 
     @Override
     public void lowerPlatform() {
-        if (scania.getCurrentSpeed()== 0)
-        {
-            scania.truckbedAngle = Math.max(scania.truckbedAngle - 30, 0);
+        truckbedAngle = Math.max(truckbedAngle - 30, 0);
+        if (truckbedAngle == 0) {
+            rampLoadable = true;
         }
     }
 
-    @Override
-    public boolean drivable() {
-        return scania.truckbedAngle == 0;
-    }
+    public double getTruckbedAngle(){return this.truckbedAngle;}
+
 }

@@ -15,7 +15,7 @@ public class TestWorkshop {
         saab = new Saab95();
         volvo = new Volvo240();
         volvoCarWorkshop = new CarWorkshop<Volvo240>("Volvo Workshop", 6);
-        allCarWorkshop = new CarWorkshop<>("Volvo Workshop", 1);
+        allCarWorkshop = new CarWorkshop<>("All Car Workshop", 1);
     }
 
     @Test

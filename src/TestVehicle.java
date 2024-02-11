@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import java.awt.*;
 
 
-public class TestCar {
+public class TestVehicle {
 
     private Volvo240 volvo;
     private Saab95 saab;

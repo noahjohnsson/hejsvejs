@@ -1,14 +1,14 @@
 import java.util.*;
 
-public class CarWorkshop <T extends Car> implements Loadable<T> {
+public class CarWorkshop <T extends Vehicle> implements Loadable<T> {
     protected String workshopName;
     protected double maxSize;
-    protected LinkedList<T> carsInWorkshop;
+    protected ArrayList<T> carsInWorkshop;
 
     public CarWorkshop(String workshopName, double maxSize) {
         this.workshopName = workshopName;
         this.maxSize = maxSize;
-        this.carsInWorkshop = new LinkedList<>();
+        this.carsInWorkshop = new ArrayList<>();
     }
 
     public void setMaxSize(double size) {
@@ -27,6 +27,7 @@ public class CarWorkshop <T extends Car> implements Loadable<T> {
         }
     }
 
-    public T unloadObject() {return carsInWorkshop.remove();}
+    public T unloadObject() {return carsInWorkshop.removeFirst();}
+    //Ändra detta när vi fattar hur man gör det
 
 }
