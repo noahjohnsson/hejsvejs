@@ -2,11 +2,11 @@ import java.awt.*;
 import java.util.Stack;
 
 public class VehicleTransport extends Truck implements Loadable<Vehicle>{
-
     protected Stack<Vehicle> loadedVehicles;
     protected final Platform platform;
-    public VehicleTransport(double maxLoad) {
-        super(2, 250, Color.magenta, "Car Transport");
+
+    public VehicleTransport(int nrDoors, double enginePower, Color color, String modelName, double xPos, double yPos, double maxLoad) {
+        super(nrDoors, enginePower, color, modelName, xPos, yPos);
         loadedVehicles = new Stack<>();
         platform = new VehicleTransportPlatform();
         platform.setSize(maxLoad);
@@ -53,7 +53,6 @@ public class VehicleTransport extends Truck implements Loadable<Vehicle>{
     @Override
     public void move() {
         super.move();
-
         for(Vehicle loadedVehicle : loadedVehicles)
         {
             loadedVehicle.setxPos(this.getxPos());

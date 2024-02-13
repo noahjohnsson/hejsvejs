@@ -3,9 +3,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+
 /*
 * This class represents the Controller part in the MVC pattern.
-* It's responsibilities is to listen to the View and responds in a appropriate manner by
+* Its responsibilities are to listen to the View and responds in an appropriate manner by
 * modifying the model state and the updating the view.
  */
 
@@ -20,28 +21,25 @@ public class CarController {
 
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
-    // A list of cars, modify if needed
     ArrayList<Vehicle> vehicles = new ArrayList<>();
-
-    static private final int vehicleWidth = 60;
-    static private final int vehicleHeight = 100;
-    static private final int controllerHeight = 200;
-
-
-
-    //methods:
+    CarWorkshop<Volvo240> volvoWorkshop;
 
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
 
-        cc.vehicles.add(new Volvo240());
-        cc.vehicles.add(new Scania());
-        cc.vehicles.add(new Saab95());
 
+        cc.vehicles.add(new Volvo240(500, 300));
+        cc.vehicles.add(new Saab95(100, 100));
+        cc.vehicles.add(new Scania(200, 200));
+        cc.volvoWorkshop = new CarWorkshop<>("Volvo Workshop", 2, 300,300);
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
+
+        // Add images
+        cc.frame.drawPanel.addVehicleImages(cc.vehicles);
+        cc.frame.drawPanel.addWorkshopImages(cc.volvoWorkshop);
 
         // Start the timer
         cc.timer.start();
@@ -53,32 +51,44 @@ public class CarController {
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             for (Vehicle vehicle : vehicles) {
-                vehicle.move();
-                int x = (int) Math.round(vehicle.getxPos());
-                int y = (int) Math.round(vehicle.getyPos());
+                double vehicleHeight = frame.drawPanel.images.get(vehicle).getHeight();
+                double vehicleWidth = frame.drawPanel.images.get(vehicle).getWidth();
+                double panelHeight = frame.drawPanel.getHeight();
+                double panelWidth = frame.drawPanel.getWidth();
+                double x = vehicle.getxPos();
+                double y = vehicle.getyPos();
 
-                // vänsterkant elr högerkant eler topkant eler nedrekant
-                if (x < 0 || x > frame.getWidth() - vehicleWidth || y < 0 || y > frame.getHeight() - vehicleHeight - controllerHeight) {
+                // leftEdge or rightEdge or topEdge or bottomEdge
+                if (x < 0 || x > panelWidth - vehicleWidth || y < 0 || y + vehicleHeight > panelHeight) {
                     vehicle.stopEngine();
                     vehicle.turnLeft();
                     vehicle.turnLeft();
                     if (x < 0) {
                         vehicle.setxPos(1);
-                    } else if (x > frame.getWidth() - vehicleWidth) {
-                        vehicle.setxPos(frame.getWidth() - vehicleWidth - 1);
+                    } else if (x > panelWidth - vehicleWidth) {
+                        vehicle.setxPos(panelWidth - vehicleWidth - 1);
                     }
                     if (y < 0) {
                         vehicle.setyPos(1);
-                    } else if (y > frame.getHeight() - vehicleHeight - controllerHeight) {
-                        vehicle.setyPos(frame.getHeight() - vehicleHeight - controllerHeight - 1);
+                    } else if (y + vehicleHeight > panelHeight) {
+                        vehicle.setyPos(panelHeight - vehicleHeight - 1);
                     }
                     vehicle.startEngine();
                 }
-                frame.drawPanel.moveit(x, y);
-
-
-
-                // repaint() calls the paintComponent method of the panel
+                if (vehicle instanceof Volvo240) {
+                    // Check collision with VolvoWorkshop
+                    if (x < volvoWorkshop.getxPos() + frame.drawPanel.volvoWorkshopImage.getWidth() &&
+                            x + vehicleWidth > volvoWorkshop.getxPos() &&
+                            y < volvoWorkshop.getyPos() + frame.drawPanel.volvoWorkshopImage.getHeight() &&
+                            y + vehicleHeight > volvoWorkshop.getyPos()) {
+                        vehicle.stopEngine();
+                        volvoWorkshop.loadObject((Volvo240) vehicle);
+                        vehicles.remove(vehicle);
+                        frame.drawPanel.images.remove(vehicle);
+                        break;
+                    }
+                }
+                frame.drawPanel.moveit(vehicle);
                 frame.drawPanel.repaint();
             }
         }

@@ -13,16 +13,16 @@ public abstract class Vehicle implements Movable {
     private Size size;
     public enum Size { SMALL, MEDIUM, LARGE }
 
-    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, Size size) {
+    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, Size size, double xPos, double yPos) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.color = color;
         this.modelName = modelName;
         this.size = size;
-        this.xPos = 0;
-        this.yPos = 0;
-        this.xDir = 0;
-        this.yDir = 1;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.xDir = 1;
+        this.yDir = 0;
         stopEngine();
     }
 
@@ -39,13 +39,20 @@ public abstract class Vehicle implements Movable {
     }
 
     protected double getxPos() { return xPos; }
+
     protected double getyPos() { return yPos; }
+
+
     protected double getxDir() { return xDir; }
+
     protected double getyDir() { return yDir; }
 
     protected void setxPos(double amount) { this.xPos = amount;}
+
     protected void setyPos(double amount) { this.yPos = amount;}
+
     protected void setxDir(double amount) { this.xDir = amount;}
+
     protected void setyDir(double amount) { this.yDir = amount;}
 
     protected Color getColor() {
@@ -89,61 +96,26 @@ public abstract class Vehicle implements Movable {
         this.yPos += currentSpeed * this.yDir;
 
     }
+
     public void turnLeft() {
         double temp = this.xDir;
         this.xDir = -this.yDir;
         this.yDir = temp;
-
-//        if (this.xDir == 0 && this.yDir == 1) {
-//            this.xDir = -1;
-//            this.yDir = 0;
-//            return;
-//        }
-//        if (this.xDir == -1 && this.yDir == 0) {
-//            this.xDir = 0;
-//            this.yDir = -1;
-//            return;
-//        }
-//        if (this.xDir == 0 && this.yDir == -1) {
-//            this.xDir = 1;
-//            this.yDir = 0;
-//            return;
-//        }
-//        if (this.xDir == 1 && this.yDir == 0) {
-//            this.xDir = 0;
-//            this.yDir = 1;
-//        }
     }
+
     public void turnRight() {
         double temp = this.xDir;
         this.xDir = this.yDir;
         this.yDir = -temp;
-//        if (this.xDir == 0 && this.yDir == 1) {
-//            this.xDir = 1;
-//            this.yDir = 0;
-//            return;
-//        }
-//        if (this.xDir == -1 && this.yDir == 0) {
-//            this.xDir = 0;
-//            this.yDir = 1;
-//            return;
-//        }
-//        if (this.xDir == 0 && this.yDir == -1) {
-//            this.xDir = -1;
-//            this.yDir = 0;
-//            return;
-//        }
-//        if (this.xDir == 1 && this.yDir == 0) {
-//            this.xDir = 0;
-//            this.yDir = -1;
-//        }
     }
+
     protected void incrementSpeed(double amount){
         if (getCurrentSpeed() + speedFactor() * amount > currentSpeed)
             currentSpeed = getCurrentSpeed() + speedFactor() * amount;
         if (currentSpeed > enginePower)
             currentSpeed = enginePower;
     }
+
     protected void decrementSpeed(double amount){
         if (getCurrentSpeed() - speedFactor() * amount < currentSpeed)
             currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
