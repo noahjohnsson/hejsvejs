@@ -29,9 +29,9 @@ public class CarController {
         CarController cc = new CarController();
 
 
-        cc.vehicles.add(new Volvo240(500, 300));
-        cc.vehicles.add(new Saab95(100, 100));
-        cc.vehicles.add(new Scania(200, 200));
+        cc.vehicles.add(new Volvo240(0, 300));
+        cc.vehicles.add(new Saab95(0, 100));
+        cc.vehicles.add(new Scania(0, 200));
         cc.volvoWorkshop = new CarWorkshop<>("Volvo Workshop", 2, 300,300);
 
         // Start a new view and send a reference of self
@@ -39,7 +39,7 @@ public class CarController {
 
         // Add images
         cc.frame.drawPanel.addVehicleImages(cc.vehicles);
-        cc.frame.drawPanel.addWorkshopImages(cc.volvoWorkshop);
+        cc.frame.drawPanel.addWorkshopImage(cc.volvoWorkshop);
 
         // Start the timer
         cc.timer.start();
