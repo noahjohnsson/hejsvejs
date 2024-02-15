@@ -4,7 +4,7 @@ public class Scania extends Truck {
     protected final ScaniaPlatform platform;
 
     public Scania(double xPos, double yPos) {
-        super(2, 250, Color.lightGray, "Scania Truck", xPos, yPos);
+        super(2, 250, Color.lightGray, "Scania Truck", xPos, yPos, false);
         this.platform = new ScaniaPlatform();
     }
 

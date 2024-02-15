@@ -5,8 +5,8 @@ public class VehicleTransport extends Truck implements Loadable<Vehicle>{
     protected Stack<Vehicle> loadedVehicles;
     protected final Platform platform;
 
-    public VehicleTransport(int nrDoors, double enginePower, Color color, String modelName, double xPos, double yPos, double maxLoad) {
-        super(nrDoors, enginePower, color, modelName, xPos, yPos);
+    public VehicleTransport(int nrDoors, double enginePower, Color color, String modelName, double xPos, double yPos, double maxLoad, boolean engineOn) {
+        super(nrDoors, enginePower, color, modelName, xPos, yPos, engineOn);
         loadedVehicles = new Stack<>();
         platform = new VehicleTransportPlatform();
         platform.setSize(maxLoad);

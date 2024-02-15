@@ -12,8 +12,9 @@ public abstract class Vehicle implements Movable {
     private double yDir;
     private Size size;
     public enum Size { SMALL, MEDIUM, LARGE }
+    protected boolean engineOn;
 
-    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, Size size, double xPos, double yPos) {
+    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, Size size, double xPos, double yPos, boolean engineOn) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.color = color;
@@ -24,6 +25,7 @@ public abstract class Vehicle implements Movable {
         this.xDir = 1;
         this.yDir = 0;
         stopEngine();
+        this.engineOn = engineOn;
     }
 
     protected int getNrDoors() {
@@ -66,7 +68,7 @@ public abstract class Vehicle implements Movable {
     protected Size getsize() {return size; }
 
     protected void startEngine() {
-        currentSpeed = 0.1;
+        this.engineOn = true;
     }
 
     protected void stopEngine() {
@@ -76,11 +78,13 @@ public abstract class Vehicle implements Movable {
     protected abstract double speedFactor();
 
     public void gas(double amount) {
+        if (!getEngineStatus()){
+            throw new IllegalArgumentException("Engine not on");
+        }
         if (amount < 0 || amount > 1) {
             throw new IllegalArgumentException("Invalid gas amount");
-        } else {
-            incrementSpeed(amount);
         }
+        incrementSpeed(amount);
     }
 
     public void brake(double amount) {
@@ -119,6 +123,10 @@ public abstract class Vehicle implements Movable {
     protected void decrementSpeed(double amount){
         if (getCurrentSpeed() - speedFactor() * amount < currentSpeed)
             currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
+    }
+
+    protected boolean getEngineStatus(){
+        return this.engineOn;
     }
 }
 
