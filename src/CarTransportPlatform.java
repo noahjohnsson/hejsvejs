@@ -1,4 +1,4 @@
-public class VehicleTransportPlatform extends Platform{
+public class CarTransportPlatform extends Platform{
 
     public VehicleTransportPlatform() {
         rampLoadable = false;
