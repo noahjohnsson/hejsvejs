@@ -21,11 +21,13 @@ public class DrawPanel extends JPanel{
     }
 
     // Initializes the panel and reads the images
-    public DrawPanel(int x, int y) {
+    public DrawPanel(int x, int y, Model model) {
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
         this.loadImages();
+        this.addVehicleImages(model.getVehicles());
+        this.addWorkshopImage(model.getVolvoWorkshop());
     }
 
     public void loadImages() {
