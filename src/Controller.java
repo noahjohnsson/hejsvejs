@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,9 +20,17 @@ public class Controller {
     public Controller(Model vehicleModel, View vehicleView) {
         this.vehicleModel = vehicleModel;
         this.frame = vehicleView;
+        addListeners();
+    }
 
-
+    private void addListeners() {
         // TODO: Create more for each component as necessary
+        frame.gasSpinner.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                gasAmount = (int) ((JSpinner)e.getSource()).getValue();
+            }
+        });
+
         frame.gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -28,10 +38,12 @@ public class Controller {
             }
         });
 
-
         frame.brakeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                System.out.println("Brake");
+
                 vehicleModel.brake(gasAmount);
             }
         });
@@ -39,6 +51,8 @@ public class Controller {
         frame.turboOnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                System.out.println("TurboOn");
                 vehicleModel.setTurboOn();
             }
         });
@@ -46,6 +60,9 @@ public class Controller {
         frame.turboOffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                System.out.println("TurboOff");
+
                 vehicleModel.setTurboOff();
             }
         });
@@ -53,6 +70,9 @@ public class Controller {
         frame.liftBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                System.out.println("liftUp");
+
                 vehicleModel.raisePlatform();
             }
         });
@@ -60,6 +80,9 @@ public class Controller {
         frame.lowerBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                System.out.println("lowerDown");
+
                 vehicleModel.lowerPlatform();
             }
         });
@@ -67,6 +90,9 @@ public class Controller {
         frame.startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                System.out.println("start");
+
                 vehicleModel.startVehicles();
             }
         });
@@ -74,6 +100,9 @@ public class Controller {
         frame.stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                System.out.println("stop");
+
                 vehicleModel.stopVehicles();
             }
         });
@@ -89,9 +118,6 @@ public class Controller {
                 double panelWidth = frame.drawPanel.getWidth();
                 double x = vehicle.getxPos();
                 double y = vehicle.getyPos();
-                System.out.println(x);
-                System.out.println(y);
-
 
                 // leftEdge or rightEdge or topEdge or bottomEdge
                 if (x < 0 || x > panelWidth - vehicleWidth || y < 0 || y + vehicleHeight > panelHeight) {
@@ -123,7 +149,7 @@ public class Controller {
                         break;
                     }
                 }
-                frame.drawPanel.moveit(vehicle);
+                vehicleModel.moveit(vehicle);
                 frame.drawPanel.repaint();
             }
         }

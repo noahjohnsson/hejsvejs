@@ -1,6 +1,8 @@
+import java.io.IOException;
+
 public class WorldFactory {
     public Car createVolvo(double xPos, double yPos) {
-        return new Volvo240(10, 10);
+        return new Volvo240(xPos, yPos);
     }
 
     public Car createSaab(double xPos, double yPos) {

@@ -14,7 +14,7 @@ public class Model {
 
     private void addVehicles() {
         vehicles.add(worldFactory.createSaab(200, 200));
-        vehicles.add(worldFactory.createVolvo(100, 100));
+        vehicles.add(worldFactory.createVolvo(0, 300));
         vehicles.add(worldFactory.createScania(0, 100));
     }
 
@@ -96,4 +96,8 @@ public class Model {
         }
     }
 
+    public void moveit(Vehicle vehicle) {
+        vehicle.move();
+
+    }
 }

@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class Vehicle implements Movable {
     protected int nrDoors;
@@ -14,7 +15,7 @@ public abstract class Vehicle implements Movable {
     public enum Size { SMALL, MEDIUM, LARGE }
     protected boolean engineOn;
 
-    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, Size size, double xPos, double yPos, boolean engineOn) {
+    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, Size size, boolean engineOn, double xPos, double yPos) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.color = color;
@@ -128,6 +129,9 @@ public abstract class Vehicle implements Movable {
     protected boolean getEngineStatus(){
         return this.engineOn;
     }
+
+    protected String getModelName() {return modelName;}
+
 }
 
 

@@ -15,11 +15,6 @@ public class DrawPanel extends JPanel{
     Map<Vehicle, BufferedImage> images = new HashMap<>();
     Map<CarWorkshop<Volvo240>, BufferedImage> workshopImage = new HashMap<>();
 
-    // TODO: Make this general for all cars
-    void moveit(Vehicle vehicle){
-        vehicle.move();
-    }
-
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y, Model model) {
         this.setDoubleBuffered(true);
@@ -43,13 +38,14 @@ public class DrawPanel extends JPanel{
 
     public void addVehicleImages(ArrayList<Vehicle> vehicles){
         for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Volvo240) {
+            if (vehicle.getModelName().equals("Volvo240")) {
                 images.put(vehicle, volvoImage);
-            } else if (vehicle instanceof Saab95) {
+            } else if (vehicle.getModelName().equals("Saab95")) {
                 images.put(vehicle, saabImage);
-            } else if (vehicle instanceof Scania) {
+            } else if (vehicle.getModelName().equals("Scania")) {
                 images.put(vehicle, scaniaImage);
             }
+
         }
     }
     public void addWorkshopImage(CarWorkshop<Volvo240> workshop){
