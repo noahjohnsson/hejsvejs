@@ -21,6 +21,20 @@ public class Model {
         vehicles.add(worldFactory.createScania(0, 100));
     }
 
+    public void addExtraVehicle() {
+        if (vehicles.size() < 6) {
+            Random rand = new Random();
+            int randomxPos = rand.nextInt(800);
+            int randomyPos = rand.nextInt(400);
+        vehicles.add(worldFactory.createSaab(randomxPos, randomyPos));
+    }}
+
+    public void removeVehicle() {
+        if (!vehicles.isEmpty()) {
+            vehicles.removeFirst();
+        }
+    }
+
     public ArrayList<Vehicle> getVehicles() {
         return vehicles;
     }
