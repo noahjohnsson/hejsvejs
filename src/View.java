@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class View extends JFrame {
+public class View extends JFrame implements ModelObserver {
     private static final int X = 800;
     private static final int Y = 800;
     Model model;
@@ -30,6 +30,12 @@ public class View extends JFrame {
         this.model = model;
         drawPanel = new DrawPanel(X, Y-240, model);
         initComponents(framename);
+    }
+
+    @Override
+    public void update() {
+        // Implement the update logic here, such as calling repaint() on the DrawPanel
+        drawPanel.repaint();
     }
 
     // Sets everything in place
