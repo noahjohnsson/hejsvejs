@@ -90,6 +90,20 @@ public class Controller {
                 model.stopVehicles();
             }
         });
+
+        frame.addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.addExtraVehicle();
+            }
+        });
+
+        frame.removeCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.removeVehicle();
+            }
+        });
     }
     public Timer getTimer(){return timer;}
 
