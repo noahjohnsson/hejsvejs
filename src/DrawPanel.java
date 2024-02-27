@@ -26,7 +26,7 @@ public class DrawPanel extends JPanel{
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
-        //this.loadImages();
+//        this.loadImages();
 //        this.addVehicleImages(model.getVehicles());
 //        this.addWorkshopImage(model.getVolvoWorkshop());
     }
@@ -58,6 +58,9 @@ public class DrawPanel extends JPanel{
 //    public void addWorkshopImage(CarWorkshop<Volvo240> workshop){
 //            workshopImage.put(workshop, volvoWorkshopImage);
 //    }
+
+
+
 
     @Override
     protected void paintComponent(Graphics g) {

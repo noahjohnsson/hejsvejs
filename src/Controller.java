@@ -3,30 +3,17 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+
 
 public class Controller {
-    // member fields:
-
-    // The delay (ms) corresponds to 20 updates a sec (hz)
-    private final int delay = 50;
-    // The timer is started with a listener (see below) that executes the statements
-    // each step between delays.
     Model model;
     View frame;
     int gasAmount = 0;
-    ArrayList<Vehicle> vehicles;
-    CarWorkshop<Volvo240> volvoWorkshop;
-
 
     public Controller(Model model, View vehicleView) {
         this.model = model;
-        this.vehicles = model.getVehicles();
-        this.volvoWorkshop = model.getVolvoWorkshop();
         this.frame = vehicleView;
         addListeners();
-        model.setupTimer();
     }
 
     private void addListeners() {

@@ -24,8 +24,8 @@ public abstract class Vehicle implements Movable {
         this.size = size;
         this.xPos = xPos;
         this.yPos = yPos;
-        this.xDir = 1;
-        this.yDir = 0;
+        this.xDir = 0;
+        this.yDir = 1;
         stopEngine();
         this.engineOn = engineOn;
         this.image = image;

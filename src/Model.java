@@ -20,8 +20,18 @@ public class Model {
         this.worldFactory = new WorldFactory();
         this.vehicles = new ArrayList<>();
         this.addVehicles();
-        this.volvoWorkshop = worldFactory.createVolvoWorkshop("Volvo Workshop", 2, 300,300);
+        this.addVolvoWorkshop();
         setupTimer();
+    }
+
+    private void addVolvoWorkshop() {
+        this.volvoWorkshop = worldFactory.createVolvoWorkshop("Volvo Workshop", 2, 300,300);
+    }
+
+    private void addVehicles() {
+        vehicles.add(worldFactory.createSaab(200, 200));
+        vehicles.add(worldFactory.createVolvo(300, 0));
+        vehicles.add(worldFactory.createScania(0, 100));
     }
 
     public void addObserver(ModelObserver observer) {
@@ -52,26 +62,6 @@ public class Model {
 
     public void triggerUpdate() {
         notifyObservers();
-    }
-
-    private void addVehicles() {
-        vehicles.add(worldFactory.createSaab(200, 200));
-        vehicles.add(worldFactory.createVolvo(0, 300));
-        vehicles.add(worldFactory.createScania(0, 100));
-    }
-
-    public void addExtraVehicle() {
-        if (vehicles.size() < 6) {
-            Random rand = new Random();
-            int randomxPos = rand.nextInt(800);
-            int randomyPos = rand.nextInt(400);
-            vehicles.add(worldFactory.createSaab(randomxPos, randomyPos));
-        }}
-
-    public void removeVehicle() {
-        if (!vehicles.isEmpty()) {
-            vehicles.removeFirst();
-        }
     }
 
     public ArrayList<Vehicle> getVehicles() {
@@ -152,12 +142,6 @@ public class Model {
         }
     }
 
-    // Moves the vehicle
-    public void moveit(Vehicle vehicle) {
-        vehicle.move();
-
-    }
-
     public void moveVehicles() {
         for (Vehicle vehicle : vehicles) {
             double x = vehicle.getxPos();
@@ -165,7 +149,7 @@ public class Model {
             BufferedImage vehicleImage = vehicle.getImage();
             double vehicleHeight = vehicleImage.getHeight();
             double vehicleWidth = vehicleImage.getWidth();
-            double panelHeight = 400;
+            double panelHeight = 560;
             double panelWidth = 800;
 
             // Check collision with walls
