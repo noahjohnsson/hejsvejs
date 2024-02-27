@@ -3,6 +3,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Controller {
     // member fields:
@@ -12,19 +14,22 @@ public class Controller {
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     private Timer timer = new Timer(delay, new TimerListener());
-    Model vehicleModel;
+    Model model;
     View frame;
     int gasAmount = 0;
+    ArrayList<Vehicle> vehicles;
+    CarWorkshop<Volvo240> volvoWorkshop;
 
 
-    public Controller(Model vehicleModel, View vehicleView) {
-        this.vehicleModel = vehicleModel;
+    public Controller(Model model, View vehicleView) {
+        this.model = model;
+        this.vehicles = model.getVehicles();
+        this.volvoWorkshop = model.getVolvoWorkshop();
         this.frame = vehicleView;
         addListeners();
     }
 
     private void addListeners() {
-        // TODO: Create more for each component as necessary
         frame.gasSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 gasAmount = (int) ((JSpinner)e.getSource()).getValue();
@@ -34,92 +39,72 @@ public class Controller {
         frame.gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                vehicleModel.gas(gasAmount);
+                model.gas(gasAmount);
             }
         });
 
         frame.brakeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                System.out.println("Brake");
-
-                vehicleModel.brake(gasAmount);
-            }
+                model.brake(gasAmount);}
         });
 
         frame.turboOnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                System.out.println("TurboOn");
-                vehicleModel.setTurboOn();
+                model.setTurboOn();
             }
         });
 
         frame.turboOffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                System.out.println("TurboOff");
-
-                vehicleModel.setTurboOff();
+                model.setTurboOff();
             }
         });
 
         frame.liftBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                System.out.println("liftUp");
-
-                vehicleModel.raisePlatform();
+                model.raisePlatform();
             }
         });
 
         frame.lowerBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                System.out.println("lowerDown");
-
-                vehicleModel.lowerPlatform();
+                model.lowerPlatform();
             }
         });
 
         frame.startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                System.out.println("start");
-
-                vehicleModel.startVehicles();
+                model.startVehicles();
             }
         });
 
         frame.stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                System.out.println("stop");
-
-                vehicleModel.stopVehicles();
+                model.stopVehicles();
             }
         });
     }
-
+    public Timer getTimer(){return timer;}
 
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (Vehicle vehicle : vehicleModel.getVehicles()) {
-                double vehicleHeight = frame.drawPanel.images.get(vehicle).getHeight();
-                double vehicleWidth = frame.drawPanel.images.get(vehicle).getWidth();
-                double panelHeight = frame.drawPanel.getHeight();
-                double panelWidth = frame.drawPanel.getWidth();
+            for (Vehicle vehicle : vehicles) {
                 double x = vehicle.getxPos();
                 double y = vehicle.getyPos();
+                BufferedImage vehicleImage = vehicle.getImage();
+                double vehicleHeight = vehicleImage.getHeight();
+                double vehicleWidth = vehicleImage.getWidth();
+                double panelHeight = frame.drawPanel.getHeight();
+                double panelWidth = frame.drawPanel.getWidth();
 
-                // leftEdge or rightEdge or topEdge or bottomEdge
+                // Check collision with walls
                 if (x < 0 || x > panelWidth - vehicleWidth || y < 0 || y + vehicleHeight > panelHeight) {
                     vehicle.stopEngine();
                     vehicle.turnLeft();
@@ -136,26 +121,36 @@ public class Controller {
                     }
                     vehicle.startEngine();
                 }
-                if (vehicle instanceof Volvo240) {
+
+
+                    double workshopX = volvoWorkshop.getxPos();
+                    double workshopY = volvoWorkshop.getyPos();
+                    BufferedImage volvoWorkshopImage = volvoWorkshop.getImage();
+                    double volvoWorkshopHeight = volvoWorkshopImage.getHeight();
+                    double volvoWorkshopWidth = volvoWorkshopImage.getWidth();
+
                     // Check collision with VolvoWorkshop
-                    if (x < vehicleModel.getVolvoWorkshop().getxPos() + frame.drawPanel.volvoWorkshopImage.getWidth() &&
-                            x + vehicleWidth > vehicleModel.getVolvoWorkshop().getxPos() &&
-                            y < vehicleModel.getVolvoWorkshop().getyPos() + frame.drawPanel.volvoWorkshopImage.getHeight() &&
-                            y + vehicleHeight > vehicleModel.getVolvoWorkshop().getyPos()) {
-                        vehicle.stopEngine();
-                        vehicleModel.getVolvoWorkshop().loadObject((Volvo240) vehicle);
-                        vehicleModel.getVehicles().remove(vehicle);
-                        frame.drawPanel.images.remove(vehicle);
-                        break;
+                    if (vehicle instanceof Volvo240) {
+                        if (x < workshopX + volvoWorkshopWidth &&
+                                x + vehicleWidth > workshopX &&
+                                y < workshopY + volvoWorkshopHeight &&
+                                y + vehicleHeight > workshopY) {
+                            vehicle.stopEngine();
+                            volvoWorkshop.loadObject((Volvo240) vehicle);
+                            vehicles.remove(vehicle);
+                            //frame.drawPanel.repaint();
+
+                        }
                     }
+                    model.moveit(vehicle);
+                    frame.drawPanel.repaint();
                 }
-                vehicleModel.moveit(vehicle);
+                //model.moveit(vehicle);
                 frame.drawPanel.repaint();
+
             }
         }
     }
-    public Timer getTimer(){return timer;}
 
-}
 
 

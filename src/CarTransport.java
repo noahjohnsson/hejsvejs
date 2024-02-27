@@ -1,12 +1,13 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Stack;
 
 public class CarTransport extends Truck implements Loadable<Car>{
     protected Stack<Car> loadedVehicles;
     protected final Platform platform;
 
-    public CarTransport(int nrDoors, double enginePower, Color color, String modelName, double xPos, double yPos, double maxLoad, boolean engineOn) {
-        super(nrDoors, enginePower, color, modelName, xPos, yPos, engineOn);
+    public CarTransport(int nrDoors, double enginePower, Color color, String modelName, double xPos, double yPos, double maxLoad, boolean engineOn, BufferedImage image) {
+        super(nrDoors, enginePower, color, modelName, xPos, yPos, engineOn, image);
         loadedVehicles = new Stack<>();
         platform = new CarTransportPlatform();
         platform.setSize(maxLoad);

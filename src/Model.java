@@ -1,15 +1,18 @@
 import java.util.ArrayList;
+import java.util.Random;
+
 
 public class Model {
     private ArrayList<Vehicle> vehicles;
     private WorldFactory worldFactory;
     private CarWorkshop volvoWorkshop;
 
-    public Model() {
+    // Constructor
+    public Model(){
         this.worldFactory = new WorldFactory();
         this.vehicles = new ArrayList<>();
         this.addVehicles();
-        this.volvoWorkshop = worldFactory.createSaabWorkshop("Volvo Workshop", 2, 300,300);
+        this.volvoWorkshop = worldFactory.createVolvoWorkshop("Volvo Workshop", 2, 300,300);
     }
 
     private void addVehicles() {
@@ -96,6 +99,7 @@ public class Model {
         }
     }
 
+    // Moves the vehicle
     public void moveit(Vehicle vehicle) {
         vehicle.move();
 

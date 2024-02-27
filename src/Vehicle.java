@@ -14,8 +14,9 @@ public abstract class Vehicle implements Movable {
     private Size size;
     public enum Size { SMALL, MEDIUM, LARGE }
     protected boolean engineOn;
+    private BufferedImage image;
 
-    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, Size size, boolean engineOn, double xPos, double yPos) {
+    public Vehicle(int nrDoors, double enginePower, Color color, String modelName, Size size, boolean engineOn, double xPos, double yPos, BufferedImage image) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.color = color;
@@ -27,6 +28,7 @@ public abstract class Vehicle implements Movable {
         this.yDir = 0;
         stopEngine();
         this.engineOn = engineOn;
+        this.image = image;
     }
 
     protected int getNrDoors() {
@@ -132,6 +134,9 @@ public abstract class Vehicle implements Movable {
 
     protected String getModelName() {return modelName;}
 
+    public BufferedImage getImage() {
+        return this.image;
+    }
 }
 
 
