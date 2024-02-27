@@ -13,7 +13,6 @@ public class Controller {
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
-    private Timer timer = new Timer(delay, new TimerListener());
     Model model;
     View frame;
     int gasAmount = 0;
@@ -27,6 +26,7 @@ public class Controller {
         this.volvoWorkshop = model.getVolvoWorkshop();
         this.frame = vehicleView;
         addListeners();
+        model.setupTimer();
     }
 
     private void addListeners() {
@@ -105,66 +105,4 @@ public class Controller {
             }
         });
     }
-    public Timer getTimer(){return timer;}
-
-    private class TimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            for (Vehicle vehicle : vehicles) {
-                double x = vehicle.getxPos();
-                double y = vehicle.getyPos();
-                BufferedImage vehicleImage = vehicle.getImage();
-                double vehicleHeight = vehicleImage.getHeight();
-                double vehicleWidth = vehicleImage.getWidth();
-                double panelHeight = frame.drawPanel.getHeight();
-                double panelWidth = frame.drawPanel.getWidth();
-
-                // Check collision with walls
-                if (x < 0 || x > panelWidth - vehicleWidth || y < 0 || y + vehicleHeight > panelHeight) {
-                    vehicle.stopEngine();
-                    vehicle.turnLeft();
-                    vehicle.turnLeft();
-                    if (x < 0) {
-                        vehicle.setxPos(1);
-                    } else if (x > panelWidth - vehicleWidth) {
-                        vehicle.setxPos(panelWidth - vehicleWidth - 1);
-                    }
-                    if (y < 0) {
-                        vehicle.setyPos(1);
-                    } else if (y + vehicleHeight > panelHeight) {
-                        vehicle.setyPos(panelHeight - vehicleHeight - 1);
-                    }
-                    vehicle.startEngine();
-                }
-
-
-                    double workshopX = volvoWorkshop.getxPos();
-                    double workshopY = volvoWorkshop.getyPos();
-                    BufferedImage volvoWorkshopImage = volvoWorkshop.getImage();
-                    double volvoWorkshopHeight = volvoWorkshopImage.getHeight();
-                    double volvoWorkshopWidth = volvoWorkshopImage.getWidth();
-
-                    // Check collision with VolvoWorkshop
-                    if (vehicle instanceof Volvo240) {
-                        if (x < workshopX + volvoWorkshopWidth &&
-                                x + vehicleWidth > workshopX &&
-                                y < workshopY + volvoWorkshopHeight &&
-                                y + vehicleHeight > workshopY) {
-                            vehicle.stopEngine();
-                            volvoWorkshop.loadObject((Volvo240) vehicle);
-                            vehicles.remove(vehicle);
-                            //frame.drawPanel.repaint();
-
-                        }
-                    }
-                    model.moveit(vehicle);
-                    frame.drawPanel.repaint();
-                }
-                //model.moveit(vehicle);
-                frame.drawPanel.repaint();
-
-            }
-        }
-    }
-
-
-
+}
