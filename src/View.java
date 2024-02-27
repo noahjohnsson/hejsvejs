@@ -34,7 +34,6 @@ public class View extends JFrame implements ModelObserver {
 
     @Override
     public void update() {
-        // Implement the update logic here, such as calling repaint() on the DrawPanel
         drawPanel.repaint();
     }
 
