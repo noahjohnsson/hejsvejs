@@ -72,16 +72,18 @@ public class Model {
         return volvoWorkshop;
     }
 
-    // Calls the gas method for each vehicle once
-    void gas(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Vehicle vehicle : vehicles
-        ) {
-            vehicle.gas(gas);
+    protected void gas(int amount) {
+        double gas = (double) amount / 100;
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getEngineStatus()) {
+                try {
+                    vehicle.gas(gas);
+                } catch (IllegalArgumentException ignored) {}
+            }
         }
     }
 
-    // Calls the brake method for each vehicle once
+
     void brake(int amount) {
         double gas = ((double) amount) / 100;
         for (Vehicle vehicle : vehicles
@@ -90,43 +92,38 @@ public class Model {
         }
     }
 
-    // Calls the turboOn method for each Saab95 once
     void setTurboOn(){
         for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Saab95){
+            if (vehicle.getModelName() == "Saab95"){
                 ((Saab95) vehicle).setTurboOn();
             }
         }
     }
 
-    // Calls the turboOff method for each Saab95 once
     void setTurboOff(){
         for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Saab95){
+            if (vehicle.getModelName() == "Saab95"){
                 ((Saab95) vehicle).setTurboOff();
             }
         }
     }
 
-    // Calls the raisePlatform method for each Scania once
     void raisePlatform(){
         for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Scania){
+            if (vehicle.getModelName() == "Scania"){
                 ((Scania) vehicle).platform.raisePlatform();
             }
         }
     }
 
-    // Calls the lowerPlatform method for each Scania once
     void lowerPlatform(){
         for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Scania){
+            if (vehicle.getModelName() == "Scania"){
                 ((Scania) vehicle).platform.lowerPlatform();
             }
         }
     }
 
-    // Calls the startEngine method for each vehicle once
     void startVehicles(){
         for (Vehicle vehicle : vehicles)
         {
@@ -134,7 +131,6 @@ public class Model {
         }
     }
 
-    // Calls the stopEngine method for each vehicle once
     void stopVehicles(){
         for (Vehicle vehicle : vehicles)
         {
@@ -177,7 +173,7 @@ public class Model {
             double volvoWorkshopWidth = volvoWorkshopImage.getWidth();
 
             // Check collision with VolvoWorkshop
-            if (vehicle instanceof Volvo240) {
+            if (vehicle.getModelName() == "Volvo240") {
                 if (x < workshopX + volvoWorkshopWidth &&
                         x + vehicleWidth > workshopX &&
                         y < workshopY + volvoWorkshopHeight &&
